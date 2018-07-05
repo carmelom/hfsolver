@@ -2,7 +2,7 @@
 hfsolver: a numerical solver for the Hartree-Fock equation of state of a homogeneous Bose gas
 
 ## Installation
-The recommended way is to install the pacage from GitHub using `pip`
+The recommended way is to install the package from GitHub using `pip`
 
     pip install --user git+https://github.com/carmelom/hfsolver.git
 
