@@ -18,6 +18,9 @@ def lambda_therm(T):
 def n_crit(T):
     return z32/lambda_therm(T)**3
 
+def T_crit(n):
+    return 2*pi*hbar**2 * (n/z32)**(2./3)/(mass*kB)
+
 def _alpha(T):
     return g_int/(lambda_therm(T)**3 * kB*T)
 
@@ -32,7 +35,7 @@ def integrate_N_harmonic_trap(mu0, omega_ho, n_radial, mu_radial):
 
 
 
-def solver_harmonic_trap(mu0, T, omega_ho, dr=1e-6):
+def solver_harmonic_trap(mu0, T, omega_ho, r=None, dr=1e-6, Rmax=None):
     """Returns interpolating functions to calculate the density as a function of ``mu(r)``.
     Those can be evaluated on an arbitrary grid of values for ``mu``.
 
@@ -65,8 +68,17 @@ def solver_harmonic_trap(mu0, T, omega_ho, dr=1e-6):
     """
     lt = lambda_therm(T)
     alpha = _alpha(T)
-    Rmax = np.sqrt(30*mu0/mass)/omega_ho
-    r = np.arange(0, Rmax, dr)
+    if r is None:
+        if Rmax is None:
+            if mu0 > 0:
+                Rmax = np.sqrt(30*mu0/mass)/omega_ho # almost 4\sigma
+            else:
+                Rmax = 3*np.sqrt(kB*T/mass)/omega_ho # 4\sigma thermal
+        else:
+            Rmax = Rmax
+        r = np.arange(0, Rmax, dr)
+    else:
+        r = r
     mu = mu0 - radial_harmonic_trap(r, omega_ho)
     nu = _nu(mu, T)
     x_t = np.empty(nu.shape)
