@@ -8,18 +8,31 @@ from scipy.interpolate import interp1d
 from scipy.integrate import trapz
 
 #### Sodium values
-mass = 23*atomic_mass
-a_scatt = 52*aB
-g_int = 4*pi*hbar**2*a_scatt/mass
+
+
+class HarmonicTrapHFSolver():
+    '''docstring here
+    '''
+    atomic_constants = {
+    'Na23': {'mass': 23*atomic_mass, 'a_scatt': 52*aB},
+    'Rb87': {'mass': 87*atomic_mass, 'a_scatt': 100.40*aB},
+    }
+
+    def __init__(self, species, mass=None, a_scatt=None):
+        if species in self.atomic_constants.keys():
+            self.species = species
+            self.mass = self.atomic_constants[species]['mass']
+            self.a_scatt = self.atomic_constants[species]['a_scatt']
+        else:
+            self.species = None
+            self.mass = mass
+            self.a_scatt = a_scatt
+        self.g_int = 4*pi*hbar**2*self.a_scatt/self.mass
+
 
 def lambda_therm(T):
     return ((2*pi*hbar**2)/(mass*kB*T))**(1./2)
 
-def n_crit(T):
-    return z32/lambda_therm(T)**3
-
-def T_crit(n):
-    return 2*pi*hbar**2 * (n/z32)**(2./3)/(mass*kB)
 
 def _alpha(T):
     return g_int/(lambda_therm(T)**3 * kB*T)
@@ -27,12 +40,8 @@ def _alpha(T):
 def _nu(mu, T):
     return mu*lambda_therm(T)**3/g_int
 
-def radial_harmonic_trap(r, omega_ho=2*pi):
+def Vtrap(r, omega_ho=2*pi):
     return 0.5 * mass * omega_ho**2 * r**2
-
-def integrate_N_harmonic_trap(mu0, omega_ho, n_radial, mu_radial):
-    return -4*pi/np.sqrt(mass*omega_ho**2)**3 * trapz(n_radial * np.sqrt(2*(mu0 - mu_radial)), mu_radial)
-
 
 
 def solver_harmonic_trap(mu0, T, omega_ho, r=None, dr=1e-6, Rmax=None):

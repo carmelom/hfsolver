@@ -10,6 +10,8 @@ from functools import partial
 from scipy.optimize import brentq
 
 
+_rtol = 1e-8
+_z0 = np.sqrt(_rtol)/2
 _g32 = partial(mp.fp.polylog, 3/2)
 z32 = _g32(1)
 
@@ -22,10 +24,10 @@ def solver(nu, alpha):
     if eta == 0: #avoid pushing the solver to the domain boundary
         return (z32, 0.)
     else:
-        if nu <= -1e3: #cut where numerical errors start to grow
+        if alpha*nu <= 0.5*np.log(3*_rtol): #cut where g23(z) - z <= _rtol
             return (np.exp(alpha*nu), 0)
         else:
-            z = brentq(_fun, 1e-20, 1, args=(eta, nu, alpha))
+            z = brentq(_fun, _z0, 1, args=(eta, nu, alpha))
             xt = nu/2 - eta*np.log(z)/(2*alpha)
             xc = 0 if eta >= 0 else (nu - 2*xt)
             return (xt, xc)
