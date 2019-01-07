@@ -8,12 +8,11 @@ import numpy as np
 import mpmath as mp #fast, low precision implementation
 from functools import partial
 from scipy.optimize import brentq
+from .functions import _g32, z32
 
 
 _rtol = 1e-8
 _z0 = np.sqrt(_rtol)/2
-_g32 = partial(mp.fp.polylog, 3/2)
-z32 = _g32(1)
 
 def _fun(z, eta, nu, alpha):
     ret = _g32(z) - nu/2 + eta*np.log(z)/(2*alpha)
