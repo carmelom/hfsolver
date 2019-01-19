@@ -34,7 +34,6 @@ def integrate_N_harmonic_trap(mu0, omega_ho, n_radial, mu_radial):
     return -4*pi/np.sqrt(mass*omega_ho**2)**3 * trapz(n_radial * np.sqrt(2*(mu0 - mu_radial)), mu_radial)
 
 
-
 def solver_harmonic_trap(mu0, T, omega_ho, r=None, dr=1e-6, Rmax=None):
     """Returns interpolating functions to calculate the density as a function of ``mu(r)``.
     Those can be evaluated on an arbitrary grid of values for ``mu``.
@@ -91,3 +90,15 @@ def solver_harmonic_trap(mu0, T, omega_ho, r=None, dr=1e-6, Rmax=None):
     fun_n = interp1d(mu, _n, kind='cubic')
     fun_n0 = interp1d(mu, _n0, kind='cubic')
     return fun_n, fun_n0, mu, r, alpha
+
+def _solver_LDA(mu0, T, V):
+    lt = lambda_therm(T)
+    alpha = _alpha(T)
+    nu = _nu(mu0 - V, T)
+    x_t, x_c = solver(nu, alpha)
+    x_tot = x_t + x_c
+    _n = float(x_tot)/lt**3
+    _n0 = float(x_c)/lt**3
+    return _n, _n0
+
+solver_LDA = np.vectorize(_solver_LDA, excluded={'mu0', 'T'})
