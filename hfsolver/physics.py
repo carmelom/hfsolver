@@ -9,7 +9,9 @@ from scipy.integrate import trapz
 
 #### Sodium values
 mass = 23*atomic_mass
-a_scatt = 52*aB
+
+# scattering length: https://journals.aps.org/pra/abstract/10.1103/PhysRevA.83.042704
+a_scatt = 54.54 * aB
 g_int = 4*pi*hbar**2*a_scatt/mass
 
 def lambda_therm(T):
