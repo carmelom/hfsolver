@@ -167,28 +167,50 @@ Calculating the total density $x$ from the solution for $z$ and substituting bac
 \begin{equation*}
   \left\{
   \begin{aligned}
-    &(\nu \leq 2\,g_{3/2}(1)) \quad F(z) = g_{3/2}(z) - \frac{\nu}{2} + \frac{1}{2\alpha}\ln z \quad\Rightarrow\quad
+    &(\nu \leq 2\,g_{3/2}(1)) \quad F(z) = g_{3/2}(z) - \frac{\nu}{2} + \frac{1}{2\alpha}\ln z &&\quad\Rightarrow\quad
       \left\{
       \begin{aligned}
       x_t &= \frac{\nu}{2} - \frac{1}{2\alpha}\ln z \\
       x_0 &= 0
       \end{aligned}\right. \\
-    &(\nu > 2\,g_{3/2}(1)) \quad F(z) = g_{3/2}(z) - \frac{\nu}{2} - \frac{1}{2\alpha}\ln z \quad\Rightarrow\quad
+    &(\nu > 2\,g_{3/2}(1)) \quad F(z) = g_{3/2}(z) - \frac{\nu}{2} - \frac{1}{2\alpha}\ln z &&\quad\Rightarrow\quad
       \left\{
       \begin{aligned}
         x_t &= \frac{\nu}{2} + \frac{1}{2\alpha}\ln z \\
         x_0 &= \nu - 2 x_t
-      \end{aligned}\right.
+      \end{aligned}\right. \\
   \end{aligned}
   \right.
 \end{equation*}
 
 Figure~\ref{fig:solution} shows a solution for $x_0$, $x_t$ close to the transition point.
 
+\subsection*{Solution for $\mu$}
+Reverse everything and compute $\mu$ and $n_0$ as function of $n$ and $T$. The $F(z)$ to find the fugacity is a bit more different in the two (thermal and condensed) cases. The condition for condensation now is easier, $x = n\lambda_T^3 \leq g_{3/2}(1)$.
+\begin{equation*}
+  \left\{
+  \begin{aligned}
+    &(x \leq g_{3/2}(1)) \quad F(z) = g_{3/2}(z) - x \quad\Rightarrow\quad
+      \left\{
+      \begin{aligned}
+      \nu &= 2x - \frac{1}{\alpha}\ln z \\
+      x_0 &= 0
+      \end{aligned}\right. \\
+    &(x > g_{3/2}(1)) \quad F(z) = g_{3/2}(z) - x - \frac{1}{\alpha}\ln z \quad\Rightarrow\quad
+      \left\{
+      \begin{aligned}
+        \nu &= 2x - \frac{1}{\alpha}\ln z \quad\text{(the same)} \\
+        x_0 &= \frac{1}{\alpha}\ln z
+      \end{aligned}\right.
+  \end{aligned}
+  \right.
+\end{equation*}
+
+
 \subsection*{A bit of physics}
 \subsubsection*{Reasonable values}
 
-Assuming a sample of Na$^{23}$ atoms, Fig.~\ref{fig:alpha_nu} shows a range of physically plausible values for $\alpha(T)$ and $\nu(\mu, T)$.
+Assuming a sample of $^{23}$Na atoms, Fig.~\ref{fig:alpha_nu} shows a range of physically plausible values for $\alpha(T)$ and $\nu(\mu, T)$.
 
 \subsubsection*{Harmonic trap}
 
